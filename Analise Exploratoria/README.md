@@ -1,119 +1,163 @@
+
 ---
 
 # Análise Exploratória de Dados (AED)
 
-A análise exploratória de dados é uma das etapas mais importantes em um projeto de Ciência de Dados, pois permite compreender melhor as características do seu conjunto de dados antes de aplicar técnicas mais avançadas de aprendizado de máquina. Aqui estão as principais funções e etapas usadas em uma AED.
+O principal passo de um projeto de Ciência de Dados, antes da aplicação de modelos de Machine Learning, é entender e explorar os dados disponíveis. Abaixo estão as principais funções utilizadas para realizar a Análise Exploratória de Dados (AED), um processo essencial para identificar padrões, detectar anomalias e formular hipóteses.
 
 ## 1. Importação de Bibliotecas e Dataset
 
-### Importação do Pandas
+### Importação de Bibliotecas
+
 ```python
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 ```
-O `pandas` é uma biblioteca essencial para manipulação e análise de dados em Python. Ele fornece estruturas de dados como `DataFrame` e `Series`, que facilitam o trabalho com dados tabulares.
 
-### Leitura de Arquivo CSV
+Essas bibliotecas são amplamente usadas em projetos de Ciência de Dados. O `pandas` é utilizado para manipulação de dados tabulares, o `matplotlib` para visualização básica e o `seaborn` para visualização avançada de gráficos.
+
+### Carregamento de Dataset
+
 ```python
 base = pd.read_csv('dataset.csv')
 ```
-A função `pd.read_csv()` permite carregar um dataset em formato CSV em um `DataFrame` do Pandas, que será utilizado para as análises subsequentes.
+
+O método `pd.read_csv()` é utilizado para ler arquivos no formato CSV e carregá-los como `DataFrame`, facilitando o tratamento de dados tabulares.
+
+---
 
 ## 2. Visualização Inicial dos Dados
 
 ### Visualização das Primeiras Linhas
+
 ```python
-base.head(n)
+base.head(n=5)
 ```
-O método `head()` mostra as primeiras `n` linhas do dataset. Isso é útil para obter uma visão geral da estrutura e conteúdo dos dados.
+
+O método `head()` exibe as primeiras `n` linhas do dataset. Isso ajuda a ter uma visão inicial da estrutura dos dados.
 
 ### Visualização das Últimas Linhas
+
 ```python
-base.tail(n)
+base.tail(n=5)
 ```
-Semelhante ao `head()`, o método `tail()` exibe as últimas `n` linhas do dataset, permitindo verificar a parte final dos dados.
+
+A função `tail()` permite visualizar as últimas `n` linhas do dataset.
 
 ### Verificação do Tamanho do Dataset
+
 ```python
 base.shape
 ```
-A função `shape` retorna uma tupla com o número de linhas e colunas do `DataFrame`. Isso ajuda a entender a dimensão do conjunto de dados.
+
+A função `shape` retorna uma tupla contendo o número de linhas e colunas no dataset.
+
+---
 
 ## 3. Informações sobre os Dados
 
 ### Resumo das Informações do Dataset
+
 ```python
 base.info()
 ```
-A função `info()` fornece um resumo com o número de entradas, tipos de dados de cada coluna, e a quantidade de valores nulos. Isso é essencial para identificar problemas como dados ausentes ou tipos incorretos.
+
+A função `info()` apresenta informações sobre o número de entradas, tipos de dados e valores nulos presentes em cada coluna. Isso é útil para identificar inconsistências no formato dos dados.
 
 ### Contagem de Valores Nulos
+
 ```python
 base.isnull().sum()
 ```
-Esse comando exibe a contagem de valores nulos em cada coluna, permitindo identificar facilmente onde os dados estão faltando.
+
+Esse comando exibe a contagem de valores nulos por coluna, permitindo identificar onde faltam dados.
 
 ### Estatísticas Descritivas
+
 ```python
 base.describe()
 ```
-A função `describe()` gera um resumo estatístico das colunas numéricas, incluindo contagem, média, desvio padrão, valores mínimo e máximo, e os percentis. Isso fornece uma visão inicial das distribuições e variabilidade dos dados.
+
+O método `describe()` gera estatísticas descritivas (contagem, média, desvio padrão, mínimo, máximo, etc.) para as colunas numéricas.
+
+---
 
 ## 4. Análise de Cardinalidade
 
 ### Contagem de Valores Únicos
+
 ```python
 base.nunique()
 ```
-O método `nunique()` retorna o número de valores distintos em cada coluna. Isso ajuda a identificar colunas com alta cardinalidade, que podem não ser úteis para modelagem.
+
+O método `nunique()` retorna o número de valores distintos em cada coluna. Isso é útil para identificar colunas com alta cardinalidade (muitos valores únicos), que podem não ser relevantes para a modelagem.
+
+---
 
 ## 5. Visualização Gráfica
 
 ### Histograma
+
 ```python
-import matplotlib.pyplot as plt
-
 x = base['coluna']
-
 fig, ax = plt.subplots()
 ax.hist(x, bins=40, linewidth=0.5, edgecolor="white")
 plt.show()
 ```
-O histograma exibe a distribuição dos dados em uma coluna. É útil para identificar a dispersão, outliers, e a forma da distribuição (normal, enviesada, etc.).
+
+O histograma é uma visualização da distribuição dos dados em uma coluna. Ele ajuda a identificar padrões como a presença de outliers e a forma da distribuição.
 
 ### Boxplot
+
 ```python
 fig, ax = plt.subplots()
 ax.boxplot(base['coluna'])
 plt.show()
 ```
-O boxplot visualiza a distribuição, a mediana e os outliers de uma variável. É eficaz para comparar diferentes distribuições e identificar dados atípicos.
+
+O boxplot exibe a mediana, quartis e valores atípicos (outliers) de uma variável. É útil para detectar anomalias.
+
+---
 
 ## 6. Análise de Correlação
 
 ### Matriz de Correlação
+
 ```python
 base.corr()
 ```
-A função `corr()` calcula a correlação entre as variáveis numéricas. Isso é crucial para entender relações lineares entre variáveis e identificar possíveis colinearidades.
+
+A função `corr()` calcula a correlação entre as variáveis numéricas, indicando o grau de relacionamento linear entre elas.
 
 ### Heatmap de Correlação
-```python
-import seaborn as sns
 
-sns.heatmap(base.corr())
+```python
+sns.heatmap(base.corr(), annot=True, cmap='coolwarm')
 plt.show()
 ```
-Um heatmap é uma forma visual de representar a matriz de correlação, onde as cores indicam a força da correlação entre as variáveis. Isso facilita a interpretação rápida das relações entre as variáveis.
+
+O heatmap visualiza a matriz de correlação de forma gráfica, onde as cores representam a força da correlação entre variáveis. O parâmetro `annot=True` exibe os valores da correlação diretamente no gráfico.
 
 ### Pairplot
+
 ```python
 sns.pairplot(base, hue='coluna_categórica')
 ```
-O `pairplot()` do Seaborn cria gráficos de dispersão para pares de variáveis, categorizando-os com base em uma coluna categórica. Isso permite identificar padrões e relações entre diferentes variáveis.
+
+O `pairplot()` cria gráficos de dispersão para todas as combinações de variáveis numéricas, colorindo os pontos de acordo com uma coluna categórica.
 
 ---
 
 ## Conclusão
 
-Estas são as principais funções utilizadas na análise exploratória de dados com Python. Elas fornecem uma base sólida para entender a estrutura, qualidade e principais características do seu dataset antes de avançar para a modelagem de dados e outras etapas mais avançadas.
+Essas funções são essenciais para realizar uma Análise Exploratória de Dados, fornecendo insights valiosos sobre a estrutura e padrões presentes nos dados. Ao entender melhor os dados, você estará mais preparado para tomar decisões informadas na construção de modelos de aprendizado de máquina.
+
+## Fontes Utilizadas
+
+- [Pandas Documentation](https://pandas.pydata.org/pandas-docs/stable/)
+- [Matplotlib Documentation](https://matplotlib.org/stable/contents.html)
+- [Seaborn Documentation](https://seaborn.pydata.org/)
+
+---
 
