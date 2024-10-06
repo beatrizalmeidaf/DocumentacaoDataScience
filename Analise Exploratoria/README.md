@@ -151,8 +151,7 @@ O `pairplot()` cria gráficos de dispersão para todas as combinações de vari�
 
 ## Conclusão
 
-Essas funções são essenciais para realizar uma Análise Exploratória de Dados, fornecendo insights valiosos sobre a estrutura e padrões presentes nos dados. Ao entender melhor os dados, você estará mais preparado para tomar decisões informadas na construção de modelos de aprendizado de máquina.
-
+Essas funções são essenciais para realizar uma Análise Exploratória de Dados, fornecendo insights valiosos sobre a estrutura e padrões presentes nos dados. 
 ## Fontes Utilizadas
 
 - [Pandas Documentation](https://pandas.pydata.org/pandas-docs/stable/)
